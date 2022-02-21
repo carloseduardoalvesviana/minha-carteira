@@ -18,7 +18,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 🚀 Como executar
 
-Clone o projeto e acesse a pasta do mesmo.
+Clone o projeto e acesse a pasta minha-carteira.
 
 ```bash
 $ git clone https://github.com/carloseduardoalvesviana/minha-carteira.git
