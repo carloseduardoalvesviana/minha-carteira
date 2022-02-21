@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Container, FormTransaction, Title, Transactions } from './styles';
 
@@ -10,15 +9,6 @@ function Dashboard() {
   const [tipo, setTipo] = useState("entrada");
   const [transacoes, setTransacoes] = useState([]);
   const [saldo, setSaldo] = useState(0);
-  
-  let navigate = useNavigate();
-  
-  useEffect(() => {
-   if (usuario === null) {
-    navigate("/");
-    return;
-  }
-  }, []);
   
   useEffect(() => {
     let transacoesLocal = localStorage.getItem('@transacoes');
@@ -46,8 +36,6 @@ function Dashboard() {
   useEffect(() => {
     localStorage.setItem('@saldo', JSON.stringify(saldo));
   }, [saldo])
-
-
 
   function HandleFormSubmit(e) {
     e.preventDefault();
