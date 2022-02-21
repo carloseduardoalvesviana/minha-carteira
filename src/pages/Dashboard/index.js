@@ -15,6 +15,7 @@ function Dashboard() {
 
   if (!usuario) {
     navigate("/");
+    return;
   }
 
   useEffect(() => {
