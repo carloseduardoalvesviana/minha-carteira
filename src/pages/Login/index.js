@@ -31,9 +31,8 @@ function Login() {
   return (
     <Container>
       <Box>
-        <h1>Vamos lá...</h1>
+        <h1>Minha carteira</h1>
         <FormLogin onSubmit={HandleFormSubmit}>
-          <label htmlFor='email'>Email</label>
           <InputEmail
             value={email}
             onChange={HandleEmailChange}
@@ -42,7 +41,7 @@ function Login() {
             id='email'
             placeholder='Digite seu email'
           />
-          <ButtonSumit type='submit'>Log in</ButtonSumit>
+          <ButtonSumit type='submit'>Entrar</ButtonSumit>
         </FormLogin>
       </Box>
     </Container>

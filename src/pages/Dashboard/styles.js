@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const Title = styled.div`
   width: 100%;
-  margin-top: 40px;
+  margin-top: 60px;
 
   p {
     margin-top: 10px;
@@ -32,7 +32,7 @@ export const FormTransaction = styled.form`
     outline: none;
     padding: 10px;
     border-radius: 5px;
-    width: 25%;
+    width: 100%;
     margin-right: 5px;
     background: #20212c;
     color: #fff;
@@ -47,6 +47,12 @@ export const FormTransaction = styled.form`
     border-radius: 5px;
     margin-right: 5px;
   }
+
+  select {
+    padding: 8px;
+    background: #20212c;
+    color: #fff;
+  }
 `;
 
 export const Transactions = styled.div`
@@ -55,6 +61,15 @@ export const Transactions = styled.div`
   flex-direction: column;
   margin-top: 40px;
 
+  .saldo {
+    width: 20%;
+    margin-bottom: 15px;
+    background: #ad66e5;
+    padding: 5px;
+    border-radius: 5px;
+    border-left: 2px solid #fff;
+  }
+  
   ul {
     list-style-position: inside;
     list-style-type: decimal;
@@ -65,6 +80,51 @@ export const Transactions = styled.div`
       width: 100%;
       padding: 10px;
       border-radius: 5px;
+      border-left: 3px solid #c534c2;
+
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .descricao {
+        background: #c534c2;
+        color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 10px;
+      }
+
+      .valor {
+        background: #c534c2;
+        color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 10px;
+      }
+
+      .saida {
+        background: #fc78a2;
+        border-left: 2px solid #fff;
+        color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 10px;
+      }
+
+      .entrada {
+        background: #3d6b62;
+        border-left: 2px solid #fff;
+        color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 10px;
+      }
 
       display: flex;
       flex-direction: row;

@@ -8,10 +8,12 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: 'Inter', sans-serif;
+    outline: none;
   }
 
   body {
     background: #1a1e22;
+    padding: 5px;
   }
 
   button {

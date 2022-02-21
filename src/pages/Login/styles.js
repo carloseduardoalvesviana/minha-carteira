@@ -5,14 +5,17 @@ export const Container = styled.div`
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  `;
+`;
 
 export const Box = styled.div`
   padding: 15px;
   margin: 0 auto;
-  width: 300px;
+  width: 350px;
   color: #fff;
-  border-left: 3px solid #c534c2;
+  border-radius: 5px;
+  border-left: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  /* background: #47495d; */
 
   display: flex;
   flex-direction: column;
@@ -41,6 +44,7 @@ export const ButtonSumit = styled.button`
   padding: 8px;
   margin-top: 10px;
   border-radius: 5px;
+  width: 30%;
 `
 
 export const FormLogin = styled.form`
