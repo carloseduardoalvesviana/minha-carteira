@@ -10,14 +10,16 @@ function Dashboard() {
   const [tipo, setTipo] = useState("entrada");
   const [transacoes, setTransacoes] = useState([]);
   const [saldo, setSaldo] = useState(0);
-
+  
   let navigate = useNavigate();
-
-  if (!usuario) {
+  
+  useEffect(() => {
+   if (usuario === null) {
     navigate("/");
     return;
   }
-
+  }, []);
+  
   useEffect(() => {
     let transacoesLocal = localStorage.getItem('@transacoes');
     setTransacoes([...JSON.parse(transacoesLocal)]);
