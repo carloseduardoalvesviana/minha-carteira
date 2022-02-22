@@ -1,23 +1,17 @@
 import { useEffect, useState } from 'react';
-
 import { Container, FormTransaction, Title, Transactions } from './styles';
 
 function Dashboard() {
-  const [usuario] = useState(JSON.parse(localStorage.getItem('@expense-email')));
   const [descricao, setDescricao] = useState("");
   const [valor, setValor] = useState(0);
   const [tipo, setTipo] = useState("entrada");
   const [transacoes, setTransacoes] = useState([]);
   const [saldo, setSaldo] = useState(0);
-  
+
   useEffect(() => {
     let transacoesLocal = localStorage.getItem('@transacoes');
     setTransacoes([...JSON.parse(transacoesLocal)]);
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem('@transacoes', JSON.stringify(transacoes));
-  }, [transacoes])
 
   useEffect(() => {
     const entradas = transacoes.filter(t => t.tipo === 'entrada');
@@ -27,10 +21,11 @@ function Dashboard() {
     let valorSaida = 0;
 
     entradas.map(entrada => valorEntrada = parseFloat(valorEntrada) + parseFloat(entrada.valor));
-
     saidas.map(saida => valorSaida = parseFloat(valorSaida) + parseFloat(saida.valor));
 
     setSaldo(valorEntrada - valorSaida);
+
+    localStorage.setItem('@transacoes', JSON.stringify(transacoes));
   }, [transacoes]);
 
   useEffect(() => {
@@ -40,12 +35,16 @@ function Dashboard() {
   function HandleFormSubmit(e) {
     e.preventDefault();
 
-    let obj = {
-      descricao, valor, tipo,
-      id: Math.floor(Math.random() * 9999),
-    }
+    setTransacoes([
+      ...transacoes,
+      {
+        descricao,
+        valor,
+        tipo,
+        id: Math.floor(Math.random() * 9999)
+      }
+    ]);
 
-    setTransacoes([...transacoes, obj]);
     setDescricao("");
     setValor(0);
   }
@@ -58,7 +57,7 @@ function Dashboard() {
     <Container>
       <Title>
         <h1>Minha Carteira</h1>
-        <p>Olá, {usuario}</p>
+        <p>Olá</p>
       </Title>
 
       <FormTransaction onSubmit={HandleFormSubmit}>

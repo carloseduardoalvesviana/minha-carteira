@@ -14,7 +14,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - Exclusão
 - Exibição do saldo
 - Histórico de transações
-- Login
 
 ## 🚀 Como executar
 
