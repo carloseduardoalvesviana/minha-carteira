@@ -15,6 +15,11 @@ function Dashboard() {
   const [transacoes, setTransacoes] = useState<transacao[]>([]);
   const [saldo, setSaldo] = useState(0);
 
+  useEffect(() => {
+    let transacoesLocal = localStorage.getItem('@transacoes');
+    setTransacoes([...JSON.parse(transacoesLocal)]);
+  }, []);
+
   function HandleValorChange(e: React.ChangeEvent<HTMLInputElement>) {
     setValor(parseFloat(e.target.value));
   }
@@ -26,11 +31,6 @@ function Dashboard() {
   function HandleTipoChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setTipo(e.target.value);
   }
-
-  useEffect(() => {
-    let transacoesLocal = localStorage.getItem('@transacoes');
-    setTransacoes([...JSON.parse(transacoesLocal)]);
-  }, []);
 
   useEffect(() => {
     const entradas = transacoes.filter(t => t.tipo === 'entrada');
