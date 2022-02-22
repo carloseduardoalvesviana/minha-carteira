@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="minha carteria" src="public/bg.png" />
+    <img alt="minha carteria" src="public/cover.png" />
 </h1>
 
 ## 🧪 Tecnologias
