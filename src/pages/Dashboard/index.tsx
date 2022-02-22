@@ -1,12 +1,31 @@
 import { useEffect, useState } from 'react';
 import { Container, FormTransaction, Title, Transactions } from './styles';
 
+type transacao = {
+  valor: any;
+  tipo: string;
+  descricao: string;
+  id: number;
+}
+
 function Dashboard() {
-  const [descricao, setDescricao] = useState("");
-  const [valor, setValor] = useState(0);
-  const [tipo, setTipo] = useState("entrada");
-  const [transacoes, setTransacoes] = useState([]);
+  const [descricao, setDescricao] = useState<string>("");
+  const [valor, setValor] = useState<number>(0);
+  const [tipo, setTipo] = useState<string>("entrada");
+  const [transacoes, setTransacoes] = useState<transacao[]>([]);
   const [saldo, setSaldo] = useState(0);
+
+  function HandleValorChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setValor(parseFloat(e.target.value));
+  }
+
+  function HandleDescricaoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setDescricao(e.target.value);
+  }
+
+  function HandleTipoChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setTipo(e.target.value);
+  }
 
   useEffect(() => {
     let transacoesLocal = localStorage.getItem('@transacoes');
@@ -17,8 +36,8 @@ function Dashboard() {
     const entradas = transacoes.filter(t => t.tipo === 'entrada');
     const saidas = transacoes.filter(t => t.tipo === 'saida');
 
-    let valorEntrada = 0;
-    let valorSaida = 0;
+    let valorEntrada: any = 0;
+    let valorSaida: any = 0;
 
     entradas.map(entrada => valorEntrada = parseFloat(valorEntrada) + parseFloat(entrada.valor));
     saidas.map(saida => valorSaida = parseFloat(valorSaida) + parseFloat(saida.valor));
@@ -64,9 +83,9 @@ function Dashboard() {
         <button type='submit'>
           Adicionar
         </button>
-        <input type="text" onChange={(e) => setDescricao(e.target.value)} required placeholder='Ex: gasolina...' value={descricao} />
-        <input type="number" onChange={(e) => setValor(e.target.value)} required placeholder='valor' value={valor} />
-        <select name="tipo" onChange={(e) => setTipo(e.target.value)}>
+        <input type="text" onChange={HandleDescricaoChange} required placeholder='Ex: gasolina...' value={descricao} />
+        <input type="number" onChange={HandleValorChange} required placeholder='valor' value={valor} />
+        <select name="tipo" onChange={HandleTipoChange}>
           <option value="entrada">Entrada</option>
           <option value="saida">Saida</option>
         </select>
