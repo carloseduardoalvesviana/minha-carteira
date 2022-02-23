@@ -1,75 +1,69 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, FormTransaction, Title, Transactions } from './styles';
 
-type transacao = {
-  valor: any;
-  tipo: string;
-  descricao: string;
-  id: number;
-}
+import { Transaction } from '../../types/TransactionType';
 
 function Dashboard() {
-  const [descricao, setDescricao] = useState<string>("");
-  const [valor, setValor] = useState<number>(0);
-  const [tipo, setTipo] = useState<string>("entrada");
-  const [transacoes, setTransacoes] = useState<transacao[]>([]);
-  const [saldo, setSaldo] = useState(0);
+  const [description, setDescription] = useState<string>("");
+  const [value, setValue] = useState<number>(0);
+  const [type, setType] = useState<string>("entrada");
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [balance, setBalance] = useState(0);
 
   useEffect(() => {
-    let transacoesLocal = localStorage.getItem('@transacoes');
-    setTransacoes([...JSON.parse(transacoesLocal)]);
+    setTransactions([...JSON.parse(localStorage.getItem('@transacoes') || "")]);
   }, []);
 
   function HandleValorChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setValor(parseFloat(e.target.value));
+    setValue(parseFloat(e.target.value));
   }
 
   function HandleDescricaoChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setDescricao(e.target.value);
+    setDescription(e.target.value);
   }
 
   function HandleTipoChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    setTipo(e.target.value);
+    setType(e.target.value);
   }
 
   useEffect(() => {
-    const entradas = transacoes.filter(t => t.tipo === 'entrada');
-    const saidas = transacoes.filter(t => t.tipo === 'saida');
+    const entradas = transactions.filter(t => t.type === 'entrada');
+    const saidas = transactions.filter(t => t.type === 'saida');
 
     let valorEntrada: any = 0;
     let valorSaida: any = 0;
 
-    entradas.map(entrada => valorEntrada = parseFloat(valorEntrada) + parseFloat(entrada.valor));
-    saidas.map(saida => valorSaida = parseFloat(valorSaida) + parseFloat(saida.valor));
+    entradas.map(entrada => valorEntrada = parseFloat(valorEntrada) + parseFloat(entrada.value));
+    saidas.map(saida => valorSaida = parseFloat(valorSaida) + parseFloat(saida.value));
 
-    setSaldo(valorEntrada - valorSaida);
+    setBalance(valorEntrada - valorSaida);
 
-    localStorage.setItem('@transacoes', JSON.stringify(transacoes));
-  }, [transacoes]);
+    localStorage.setItem('@transacoes', JSON.stringify(transactions));
+  }, [transactions]);
 
   useEffect(() => {
-    localStorage.setItem('@saldo', JSON.stringify(saldo));
-  }, [saldo])
+    localStorage.setItem('@saldo', JSON.stringify(balance));
+  }, [balance])
 
-  function HandleFormSubmit(e) {
+  function HandleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    setTransacoes([
-      ...transacoes,
+    setTransactions([
+      ...transactions,
       {
-        descricao,
-        valor,
-        tipo,
+        description,
+        value,
+        type,
         id: Math.floor(Math.random() * 9999)
       }
     ]);
 
-    setDescricao("");
-    setValor(0);
+    setDescription("");
+    setValue(0);
   }
 
-  function DeleteTransaction(transaction) {
-    setTransacoes([...transacoes.filter(t => t !== transaction)]);
+  function DeleteTransaction(transaction: Transaction) {
+    setTransactions([...transactions.filter(t => t !== transaction)]);
   }
 
   return (
@@ -80,11 +74,10 @@ function Dashboard() {
       </Title>
 
       <FormTransaction onSubmit={HandleFormSubmit}>
-        <button type='submit'>
-          Adicionar
-        </button>
-        <input type="text" onChange={HandleDescricaoChange} required placeholder='Ex: gasolina...' value={descricao} />
-        <input type="number" onChange={HandleValorChange} required placeholder='valor' value={valor} />
+        <button type='submit'>Adicionar</button>
+        <input type="text" onChange={HandleDescricaoChange} required placeholder='Ex: gasolina...' value={description} />
+        <input type="number" onChange={HandleValorChange} required placeholder='valor' value={value} />
+
         <select name="tipo" onChange={HandleTipoChange}>
           <option value="entrada">Entrada</option>
           <option value="saida">Saida</option>
@@ -92,17 +85,17 @@ function Dashboard() {
       </FormTransaction>
 
       <Transactions>
-        <span className='saldo'>Meu saldo {saldo} R$</span>
+        <span className='saldo'>Meu saldo {balance} R$</span>
 
         <p>Historico de transações</p>
 
         <ul>
-          {transacoes.map(transaction => (
+          {transactions.map(transaction => (
             <li key={transaction.id}>
               <span>
-                <span className={transaction.tipo === 'saida' ? 'saida' : 'entrada'}>{transaction.tipo}</span>
-                <span className='descricao'>{transaction.descricao}</span>
-                <span className='valor'>{transaction.valor} R$</span>
+                <span className={transaction.type === 'saida' ? 'saida' : 'entrada'}>{transaction.type}</span>
+                <span className='descricao'>{transaction.description}</span>
+                <span className='valor'>{transaction.value} R$</span>
               </span>
               <button type='button' onClick={() => DeleteTransaction(transaction)}>Deletar</button>
             </li>
