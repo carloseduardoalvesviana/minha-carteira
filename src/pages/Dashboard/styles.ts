@@ -14,10 +14,17 @@ export const Container = styled.div`
 export const Title = styled.div`
   width: 100%;
   margin-top: 60px;
+  display: flex;
+  flex-direction: column;
 
-  p {
+  .saldo {
+    background: #ad66e5;
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 2px solid #fff;
     margin-top: 10px;
   }
+
 `;
 
 export const FormTransaction = styled.form`
@@ -26,14 +33,16 @@ export const FormTransaction = styled.form`
   border-radius: 15px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
   input {
     border: none;
     outline: none;
     padding: 10px;
     border-radius: 5px;
-    width: 100%;
-    margin-right: 5px;
+    flex: 1;
+    margin-left: 5px;
     background: #20212c;
     color: #fff;
   }
@@ -52,6 +61,7 @@ export const FormTransaction = styled.form`
     padding: 8px;
     background: #20212c;
     color: #fff;
+    margin-left: 5px;
   }
 `;
 
@@ -61,18 +71,14 @@ export const Transactions = styled.div`
   flex-direction: column;
   margin-top: 40px;
 
-  .saldo {
-    width: 20%;
-    margin-bottom: 15px;
-    background: #ad66e5;
-    padding: 5px;
-    border-radius: 5px;
-    border-left: 2px solid #fff;
+  p {
+    margin-top: 20px;
   }
-  
+
   ul {
     list-style-position: inside;
     list-style-type: decimal;
+    
 
     li {
       background: #20212c;

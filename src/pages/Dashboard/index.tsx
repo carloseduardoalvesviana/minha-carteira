@@ -70,7 +70,7 @@ function Dashboard() {
     <Container>
       <Title>
         <h1>Minha Carteira</h1>
-        <p>Olá</p>
+        <span className='saldo'>Meu saldo {balance} R$</span>
       </Title>
 
       <FormTransaction onSubmit={HandleFormSubmit}>
@@ -82,10 +82,11 @@ function Dashboard() {
           <option value="entrada">Entrada</option>
           <option value="saida">Saida</option>
         </select>
+
+
       </FormTransaction>
 
       <Transactions>
-        <span className='saldo'>Meu saldo {balance} R$</span>
 
         <p>Historico de transações</p>
 
