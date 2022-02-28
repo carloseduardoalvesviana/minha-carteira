@@ -3,7 +3,7 @@ import { Container, FormTransaction, Title, Transactions } from './styles';
 
 import { Transaction } from '../../types/TransactionType';
 
-function Dashboard() {
+const Dashboard = () => {
   const [description, setDescription] = useState<string>("");
   const [value, setValue] = useState<number>(0);
   const [type, setType] = useState<string>("entrada");
@@ -11,20 +11,9 @@ function Dashboard() {
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
-    setTransactions([...JSON.parse(localStorage.getItem('@transacoes') || "")]);
+    let t: any = localStorage.getItem('@transacoes');
+    setTransactions([...JSON.parse(t)]);
   }, []);
-
-  function HandleValorChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setValue(parseFloat(e.target.value));
-  }
-
-  function HandleDescricaoChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setDescription(e.target.value);
-  }
-
-  function HandleTipoChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    setType(e.target.value);
-  }
 
   useEffect(() => {
     const entradas = transactions.filter(t => t.type === 'entrada');
@@ -44,6 +33,18 @@ function Dashboard() {
   useEffect(() => {
     localStorage.setItem('@saldo', JSON.stringify(balance));
   }, [balance])
+
+  function HandleValorChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setValue(parseFloat(e.target.value));
+  }
+
+  function HandleDescricaoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setDescription(e.target.value);
+  }
+
+  function HandleTipoChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setType(e.target.value);
+  }
 
   function HandleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -70,11 +71,10 @@ function Dashboard() {
     <Container>
       <Title>
         <h1>Minha Carteira</h1>
-        <span className='saldo'>Meu saldo {balance} R$</span>
+        <span className='saldo'>Saldo {balance} R$</span>
       </Title>
 
       <FormTransaction onSubmit={HandleFormSubmit}>
-        <button type='submit'>Adicionar</button>
         <input type="text" onChange={HandleDescricaoChange} required placeholder='Ex: gasolina...' value={description} />
         <input type="number" onChange={HandleValorChange} required placeholder='valor' value={value} />
 
@@ -83,12 +83,12 @@ function Dashboard() {
           <option value="saida">Saida</option>
         </select>
 
-
+        <button type='submit'>Salvar</button>
       </FormTransaction>
 
       <Transactions>
 
-        <p>Historico de transações</p>
+        <p>Transações</p>
 
         <ul>
           {transactions.map(transaction => (

@@ -17,12 +17,18 @@ export const Title = styled.div`
   display: flex;
   flex-direction: column;
 
-  .saldo {
+  span.saldo {
     background: #ad66e5;
     padding: 10px;
     border-radius: 5px;
     border-left: 2px solid #fff;
     margin-top: 10px;
+    width: 100%;
+    max-width: 200px;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
 `;
@@ -42,19 +48,26 @@ export const FormTransaction = styled.form`
     padding: 10px;
     border-radius: 5px;
     flex: 1;
-    margin-left: 5px;
     background: #20212c;
     color: #fff;
   }
 
+  input:first-child {
+    margin-right: 5px;
+  }
+
   button {
-    background: #c534c2;
+    background: #ad66e5;
     color: #fff;
-    padding: 10px;
+    padding: 10px 30px;
     border: none;
     outline: none;
     border-radius: 5px;
-    margin-right: 5px;
+    margin-left: 5px;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   select {
@@ -79,15 +92,13 @@ export const Transactions = styled.div`
     list-style-position: inside;
     list-style-type: decimal;
     
-
     li {
       background: #20212c;
       margin: 10px 0px;
       width: 100%;
       padding: 10px;
       border-radius: 5px;
-      border-left: 3px solid #c534c2;
-
+      border-left: 3px solid #ad66e5;
       display: flex;
       align-items: center;
       flex-direction: row;
@@ -99,7 +110,7 @@ export const Transactions = styled.div`
       }
 
       .descricao {
-        background: #c534c2;
+        background:#ad66e5;
         color: #fff;
         border-radius: 5px;
         padding: 5px;
@@ -107,7 +118,7 @@ export const Transactions = styled.div`
       }
 
       .valor {
-        background: #c534c2;
+        background: #ad66e5;
         color: #fff;
         border-radius: 5px;
         padding: 5px;
@@ -137,8 +148,9 @@ export const Transactions = styled.div`
       justify-content: space-between;
 
       button {
-        padding: 5px;
+        padding: 10px;
         background: #c534c2;
+        background: #fc78a2;
         color: #fff;
         border: none;
         outline: none;

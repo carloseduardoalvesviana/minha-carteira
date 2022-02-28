@@ -2,7 +2,7 @@ import { BrowserRouter, Routes as Router, Route } from 'react-router-dom';
 
 import Dashboard from './pages/Dashboard';
 
-function Routes() {
+const Routes = () => {
   return (
     <BrowserRouter>
       <Router>
