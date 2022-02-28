@@ -12,7 +12,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     let t: any = localStorage.getItem('@transacoes');
-    setTransactions([...JSON.parse(t)]);
+    if(t){
+      setTransactions([...JSON.parse(t)]);
+    }
   }, []);
 
   useEffect(() => {
