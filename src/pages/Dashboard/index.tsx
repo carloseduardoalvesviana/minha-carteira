@@ -30,16 +30,16 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    const entradas = transactions.filter(t => t.type === 'entrada');
-    const saidas = transactions.filter(t => t.type === 'saida');
+    const entrances = transactions.filter(t => t.type === 'entrada');
+    const exits = transactions.filter(t => t.type === 'saida');
 
-    let valorEntrada: any = 0;
-    let valorSaida: any = 0;
+    let entrancesValues: any = 0;
+    let exitsValues: any = 0;
 
-    entradas.map(entrada => valorEntrada = parseFloat(valorEntrada) + parseFloat(entrada.value));
-    saidas.map(saida => valorSaida = parseFloat(valorSaida) + parseFloat(saida.value));
+    entrances.map(enV => entrancesValues = parseFloat(entrancesValues) + parseFloat(enV.value));
+    exits.map(exV => exitsValues = parseFloat(exitsValues) + parseFloat(exV.value));
 
-    setBalance(valorEntrada - valorSaida);
+    setBalance(entrancesValues - exitsValues);
   }, [transactions]);
 
   function HandleValorChange(e: React.ChangeEvent<HTMLInputElement>) {
