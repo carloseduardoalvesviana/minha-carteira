@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Container, FormTransaction, Title, Transactions } from './styles';
 
 import { Transaction } from '../../types/TransactionType';
+import { Balance } from '../../types/BalanceType';
+
+import { supabase } from '../../supabase/client';
 
 const Dashboard = () => {
   const [description, setDescription] = useState<string>("");
@@ -10,11 +13,17 @@ const Dashboard = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [balance, setBalance] = useState(0);
 
-  useEffect(() => {
-    let t: any = localStorage.getItem('@transacoes');
-    if(t){
-      setTransactions([...JSON.parse(t)]);
+  async function getData() {
+    const { data, error } = await supabase.from('transactions').select();
+
+    if (data) {
+      let transactionsData: Transaction[] = data;
+      setTransactions([...transactionsData]);
     }
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
 
   useEffect(() => {
@@ -28,13 +37,7 @@ const Dashboard = () => {
     saidas.map(saida => valorSaida = parseFloat(valorSaida) + parseFloat(saida.value));
 
     setBalance(valorEntrada - valorSaida);
-
-    localStorage.setItem('@transacoes', JSON.stringify(transactions));
   }, [transactions]);
-
-  useEffect(() => {
-    localStorage.setItem('@saldo', JSON.stringify(balance));
-  }, [balance])
 
   function HandleValorChange(e: React.ChangeEvent<HTMLInputElement>) {
     setValue(parseFloat(e.target.value));
@@ -48,25 +51,36 @@ const Dashboard = () => {
     setType(e.target.value);
   }
 
-  function HandleFormSubmit(e: React.FormEvent) {
+  async function HandleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    setTransactions([
-      ...transactions,
-      {
-        description,
-        value,
-        type,
-        id: Math.floor(Math.random() * 9999)
-      }
-    ]);
+    try {
+      const { data, error } = await supabase
+        .from('transactions')
+        .insert([
+          {
+            description,
+            value,
+            type
+          }
+        ]);
 
-    setDescription("");
-    setValue(0);
+      let transactionsData: Transaction[] = data || [];
+      setTransactions([...transactions, transactionsData[0]]);
+      setDescription("");
+      setValue(0);
+    } catch (error) {
+      return;
+    }
+
   }
 
-  function DeleteTransaction(transaction: Transaction) {
-    setTransactions([...transactions.filter(t => t !== transaction)]);
+  async function DeleteTransaction(transaction: Transaction) {
+    const { data, error } = await supabase
+      .from('transactions')
+      .delete()
+      .match({ id: transaction.id });
+    getData();
   }
 
   return (
