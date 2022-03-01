@@ -7,6 +7,7 @@
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [React](https://reactjs.org)
+- [Supabase](https://supabase.com/)
 - [Typescript](https://www.typescriptlang.org/)
 
 ## ✅ Funcionalidades

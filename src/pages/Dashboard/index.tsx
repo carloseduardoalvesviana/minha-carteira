@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, FormTransaction, Title, Transactions } from './styles';
 
 import { Transaction } from '../../types/TransactionType';
-import { Balance } from '../../types/BalanceType';
 
 import { supabase } from '../../supabase/client';
 
@@ -15,6 +14,10 @@ const Dashboard = () => {
 
   async function getData() {
     const { data, error } = await supabase.from('transactions').select();
+
+    if (error) {
+      return;
+    }
 
     if (data) {
       let transactionsData: Transaction[] = data;
@@ -64,6 +67,9 @@ const Dashboard = () => {
             type
           }
         ]);
+      if (error) {
+        return;
+      }
 
       let transactionsData: Transaction[] = data || [];
       setTransactions([...transactions, transactionsData[0]]);
@@ -80,7 +86,14 @@ const Dashboard = () => {
       .from('transactions')
       .delete()
       .match({ id: transaction.id });
-    getData();
+
+    if (error) {
+      return;
+    }
+
+    if (data) {
+      getData();
+    }
   }
 
   return (
